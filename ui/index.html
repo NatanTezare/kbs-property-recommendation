@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Property Finder | KBS</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Property Recommendation System</h1>
+            <p>Input your preferences to find the perfect home using rule-based reasoning.</p>
+        </header>
+
+        <main>
+            <form action="/recommend" method="POST" class="kbs-form">
+                
+                <div class="form-group">
+                    <label for="budget">Maximum Budget (KES / Month)</label>
+                    <input type="number" id="budget" name="budget" placeholder="e.g., 45000" required min="0">
+                </div>
+
+                <div class="form-group">
+                    <label for="location">Preferred Location</label>
+                    <select id="location" name="location" required>
+                        <option value="" disabled selected>Select an area...</option>
+                        <option value="Nairobi CBD">Nairobi CBD</option>
+                        <option value="Westlands">Westlands</option>
+                        <option value="Kasarani">Kasarani</option>
+                        <option value="Kilimani">Kilimani</option>
+                        <option value="Thika Road">Thika Road</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="bedrooms">Minimum Bedrooms</label>
+                    <input type="number" id="bedrooms" name="bedrooms" placeholder="e.g., 2" required min="1" max="5">
+                </div>
+
+                <div class="form-group">
+                    <label for="security">Required Security Level</label>
+                    <div class="radio-group">
+                        <label class="radio-label">
+                            <input type="radio" name="security" value="Low" checked> Low
+                        </label>
+                        <label class="radio-label">
+                            <input type="radio" name="security" value="Medium"> Medium
+                        </label>
+                        <label class="radio-label">
+                            <input type="radio" name="security" value="High"> High
+                        </label>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="distance">Maximum Distance to Work (km)</label>
+                    <input type="number" id="distance" name="distance" placeholder="e.g., 10" required min="0">
+                </div>
+
+                <button type="submit" class="btn-submit">Find Matches</button>
+            </form>
+        </main>
+    </div>
+</body>
+</html>
