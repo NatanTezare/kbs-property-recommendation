@@ -6,7 +6,7 @@
     "price": 55000,
     "bedrooms": 2,
     "security_level": "high",
-    "image": "silver_oak.jpg"
+    "image": "silver_oak.png"
   },
   {
     "id": "H002",
@@ -15,7 +15,7 @@
     "price": 28000,
     "bedrooms": 1,
     "security_level": "medium",
-    "image": "roysambu_crest.jpg"
+    "image": "roysambu_crest.png"
   },
   {
     "id": "H003",
@@ -24,7 +24,7 @@
     "price": 35000,
     "bedrooms": 3,
     "security_level": "low",
-    "image": "thika_road_greens.jpg"
+    "image": "thika_road_greens.png"
   },
   {
     "id": "H004",
@@ -33,6 +33,6 @@
     "price": 75000,
     "bedrooms": 3,
     "security_level": "high",
-    "image": "westlands_heights.jpg"
+    "image": "westlands_heights.png"
   }
 ]

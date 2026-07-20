@@ -1,20 +1,21 @@
-/* Core Layout Reset */
+/* Core Layout Reset & Variables */
 :root {
-    --bg-color: #f8fafc;
+    --bg-color: #f0f4f8;
     --card-bg: #ffffff;
     --text-main: #1e293b;
     --text-muted: #64748b;
     --primary: #2563eb;
     --primary-hover: #1d4ed8;
-    --border-color: #cbd5e1;
-    --radius: 8px;
+    --accent-success: #10b981;
+    --border-color: #e2e8f0;
+    --radius: 12px;
 }
 
 * {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
 }
 
 body {
@@ -24,38 +25,41 @@ body {
     justify-content: center;
     align-items: center;
     min-height: 100vh;
-    padding: 20px;
+    padding: 40px 20px;
 }
 
+/* Container Adjustments for Results View */
 .container {
     background: var(--card-bg);
-    max-width: 600px;
+    max-width: 750px; /* Widened slightly to fit the cards beautifully */
     width: 100%;
-    padding: 40px;
+    padding: 35px;
     border-radius: var(--radius);
-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.05);
 }
 
 /* Header Styling */
 header {
     text-align: center;
-    margin-bottom: 30px;
+    margin-bottom: 35px;
+    border-bottom: 2px solid var(--border-color);
+    padding-bottom: 20px;
 }
 
 header h1 {
-    font-size: 24px;
-    font-weight: 700;
+    font-size: 26px;
+    font-weight: 800;
     color: var(--text-main);
     margin-bottom: 8px;
+    letter-spacing: -0.5px;
 }
 
 header p {
-    font-size: 14px;
+    font-size: 15px;
     color: var(--text-muted);
-    line-height: 1.5;
 }
 
-/* Form Fields */
+/* Form Styles */
 .kbs-form {
     display: flex;
     flex-direction: column;
@@ -71,7 +75,6 @@ header p {
 .form-group label {
     font-size: 14px;
     font-weight: 600;
-    color: var(--text-main);
 }
 
 input[type="number"], select {
@@ -80,9 +83,7 @@ input[type="number"], select {
     border: 1px solid var(--border-color);
     border-radius: var(--radius);
     font-size: 15px;
-    color: var(--text-main);
-    background-color: #fff;
-    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    transition: all 0.2s ease;
 }
 
 input[type="number"]:focus, select:focus {
@@ -91,11 +92,10 @@ input[type="number"]:focus, select:focus {
     box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
 }
 
-/* Custom Radio Configurations */
 .radio-group {
     display: flex;
     gap: 20px;
-    padding: 8px 0;
+    padding: 4px 0;
 }
 
 .radio-label {
@@ -106,20 +106,135 @@ input[type="number"]:focus, select:focus {
     cursor: pointer;
 }
 
-/* Submit Action Button */
-.btn-submit {
+/* --- Recommendations Page Layout Engine --- */
+.matches-list {
+    display: flex;
+    flex-direction: column;
+    gap: 25px; /* Spaces out your property cards */
+    margin-bottom: 30px;
+}
+
+.property-card {
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius);
+    overflow: hidden; /* Clips elements right at the rounded borders */
+    display: flex; /* Aligns image on the left, details on the right */
+    background: #fff;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.property-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 20px -8px rgba(0, 0, 0, 0.1);
+}
+
+/* 🛡️ The Image Overflow Fix Box */
+.property-image {
+    width: 40%; /* Allocates clean responsive space for the layout frame */
+    min-width: 220px;
+    position: relative;
+    background-color: #f1f5f9;
+}
+
+.property-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* 🪄 Crops and Centers image cleanly inside the frame */
+    display: block;
+}
+
+/* Dynamic Percentage Match Badge */
+.badge {
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    background-color: var(--accent-success);
+    color: white;
+    padding: 6px 12px;
+    font-size: 12px;
+    font-weight: 700;
+    border-radius: 20px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.15);
+}
+
+/* Property Details Block */
+.property-details {
+    padding: 20px;
+    width: 60%;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.property-details h2 {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--text-main);
+}
+
+.loc {
+    font-size: 13px;
+    color: var(--text-muted);
+    font-weight: 500;
+}
+
+.property-details p strong {
+    color: var(--text-main);
+}
+
+/* Explanation Facility Style Box */
+.explanation-box {
+    margin-top: auto; /* Pushes the box cleanly to the bottom of the card */
+    background-color: #f8fafc;
+    border-left: 4px solid var(--primary);
+    padding: 10px 14px;
+    font-size: 12.5px;
+    color: #475569;
+    line-height: 1.4;
+    border-radius: 0 var(--radius) var(--radius) 0;
+}
+
+/* Interactive Navigation Actions */
+.btn-submit, .btn-back {
+    display: inline-block;
+    text-align: center;
     background-color: var(--primary);
     color: white;
     border: none;
     padding: 14px;
-    font-size: 16px;
+    font-size: 15px;
     font-weight: 600;
     border-radius: var(--radius);
     cursor: pointer;
+    text-decoration: none;
     transition: background-color 0.2s ease;
-    margin-top: 10px;
+    width: 100%;
 }
 
-.btn-submit:hover {
+.btn-submit:hover, .btn-back:hover {
     background-color: var(--primary-hover);
+}
+
+.btn-back {
+    background-color: transparent;
+    border: 2px solid var(--border-color);
+    color: var(--text-muted);
+}
+
+.btn-back:hover {
+    background-color: #f1f5f9;
+    color: var(--text-main);
+}
+
+/* Responsive view collapse for mobile viewports */
+@media (max-width: 600px) {
+    .property-card {
+        flex-direction: column;
+    }
+    .property-image, .property-details {
+        width: 100%;
+    }
+    .property-image {
+        height: 180px;
+    }
 }
