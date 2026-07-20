@@ -5,7 +5,8 @@
     "location": "Kilimani",
     "price": 55000,
     "bedrooms": 2,
-    "security_level": "high"
+    "security_level": "high",
+    "image": "silver_oak.jpg"
   },
   {
     "id": "H002",
@@ -13,7 +14,8 @@
     "location": "Roysambu",
     "price": 28000,
     "bedrooms": 1,
-    "security_level": "medium"
+    "security_level": "medium",
+    "image": "roysambu_crest.jpg"
   },
   {
     "id": "H003",
@@ -21,7 +23,8 @@
     "location": "Thika Road",
     "price": 35000,
     "bedrooms": 3,
-    "security_level": "low"
+    "security_level": "low",
+    "image": "thika_road_greens.jpg"
   },
   {
     "id": "H004",
@@ -29,6 +32,7 @@
     "location": "Westlands",
     "price": 75000,
     "bedrooms": 3,
-    "security_level": "high"
+    "security_level": "high",
+    "image": "westlands_heights.jpg"
   }
 ]
