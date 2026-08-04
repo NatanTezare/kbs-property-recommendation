@@ -102,7 +102,7 @@ class ForwardChainingEngine:
                 if u_listing_type and p_listing_type and u_listing_type != p_listing_type:
                     fired = True
                     pts = base_weight
-                    msg = f"⛔ Mismatch: Property is for {p_listing_type.capitalize()} (Requested {u_listing_type.capitalize()})"
+                    msg = f"Mismatch: Property is for {p_listing_type.capitalize()} (Requested {u_listing_type.capitalize()})"
 
             # 1. FUZZY BUDGET EVALUATION
             elif rule_type == "fuzzy_budget":
@@ -119,7 +119,7 @@ class ForwardChainingEngine:
                     fired = True
                     multiplier = min(5.0, p_price / u_budget)
                     pts = base_weight * multiplier
-                    msg = f"⚠️ Severe Budget Overrun: KES {int(p_price):,} exceeds budget of KES {int(u_budget):,}"
+                    msg = f"Severe Budget Overrun: KES {int(p_price):,} exceeds budget of KES {int(u_budget):,}"
 
             # 2. BEDROOM MATCH
             elif rule_type == "exact_bedrooms":
@@ -144,7 +144,7 @@ class ForwardChainingEngine:
                     fired = True
                     pts = base_weight
                     display_estate = self.property.get('Estate') or self.property.get('estate') or 'Requested Zone'
-                    msg = f"📍 Located in requested estate zone ({display_estate})"
+                    msg = f"Located in requested estate zone ({display_estate})"
 
             # 4B. LOCATION MISMATCH PENALTY
             elif rule_type == "location_mismatch":
@@ -152,7 +152,7 @@ class ForwardChainingEngine:
                     fired = True
                     pts = base_weight
                     display_estate = self.property.get('Estate') or self.property.get('estate') or 'Other Area'
-                    msg = f"⚠️ Location mismatch ({display_estate} vs requested {target_est.capitalize()})"
+                    msg = f"Location mismatch ({display_estate} vs requested {target_est.capitalize()})"
 
             # 5. SECURITY
             elif rule_type == "high_security":
@@ -193,7 +193,7 @@ class ForwardChainingEngine:
                 if self.facts.get("require_pets") and p_pets in ["No", "False"]:
                     fired = True
                     pts = base_weight
-                    msg = "⚠️ Pets Not Allowed"
+                    msg = "Pets Not Allowed"
 
             # 10. STUDENT FRIENDLY
             elif rule_type == "student_friendly":
@@ -207,14 +207,14 @@ class ForwardChainingEngine:
                 if p_flood in ["high", "yes"]:
                     fired = True
                     pts = base_weight
-                    msg = "⚠️ Warning: High flood hazard zone"
+                    msg = "Warning: High flood hazard zone"
 
             # 12. NOISE & TRAFFIC
             elif rule_type == "high_noise_traffic":
                 if p_traffic == "high" or p_noise == "high":
                     fired = True
                     pts = base_weight
-                    msg = "⚠️ Subject to high traffic/noise congestion"
+                    msg = "Subject to high traffic/noise congestion"
 
             # 13. AMENITIES
             elif rule_type == "pool_and_gym":
