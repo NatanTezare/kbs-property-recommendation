@@ -2,6 +2,7 @@ import { Link, Outlet, useLocation } from 'react-router-dom';
 import { Home, Search, Moon, Sun, Sparkles, Menu, X } from 'lucide-react';
 import { useTheme } from '../context/ThemeContext';
 import { useState } from 'react';
+import ChatAssistant from './ChatAssistant'; // ADDED
 
 export default function Layout() {
   const { isDark, toggleTheme } = useTheme();
@@ -83,6 +84,9 @@ export default function Layout() {
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <Outlet />
       </main>
+
+      {/* 🤖 AI CHAT ASSISTANT — ADDED, floats on every page */}
+      <ChatAssistant />
     </div>
   );
 }
