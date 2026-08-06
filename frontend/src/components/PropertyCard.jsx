@@ -8,6 +8,7 @@ export default function PropertyCard({ property, onViewDetails, showMatch }) {
 
   const imageUrl = encodeURI(formattedImage);
   const fallbackImage = "https://images.unsplash.com/photo-1560518883-ce09059eeffa?q=80&w=800";
+  const displayPrice = Number(property?.price ?? property?.price_kes ?? 0);
 
   const reasoningTrace = property?.reasoningTrace || [];
 
@@ -90,7 +91,7 @@ export default function PropertyCard({ property, onViewDetails, showMatch }) {
         <div>
           <span className="text-[10px] text-stone-400 dark:text-stone-500 block uppercase font-bold tracking-wider">Monthly Rent</span>
           <span className="text-lg font-extrabold text-[#C2410C] dark:text-[#E0561B]">
-            KES {Number(property?.price || 0).toLocaleString()}
+            KES {displayPrice.toLocaleString()}
           </span>
         </div>
         <button

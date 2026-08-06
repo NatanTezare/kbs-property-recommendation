@@ -10,6 +10,8 @@ export default function ListingPage() {
   const [properties, setProperties] = useState([]);
   const [loading, setLoading] = useState(true);
 
+  const API_BASE_URL = "http://localhost:5000/api";
+
   // 🔹 Filter Controls State
   const [listingType, setListingType] = useState('ALL'); // 'ALL' | 'Rent' | 'Sale'
   const [maxPrice, setMaxPrice] = useState('');          // Numeric budget input
@@ -21,7 +23,7 @@ export default function ListingPage() {
   const itemsPerPage = 6;
 
   useEffect(() => {
-    fetch("http://localhost:5000/api/properties")
+    fetch(`${API_BASE_URL}/properties`)
       .then((res) => res.json())
       .then((data) => {
         setProperties(data);

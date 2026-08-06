@@ -3,7 +3,7 @@ import { MessageCircle, X, Send, Mic, Sparkles } from "lucide-react";
 import PropertyCard from "./PropertyCard";
 import { normalizeProperty } from "../utils/normalizeProperty";
 
-// Change this if the backend runs somewhere other than localhost:8000
+// Chat assistant backend is the FastAPI service on localhost:8000
 const API_BASE = "http://localhost:8000";
 
 const SpeechRecognitionAPI =

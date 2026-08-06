@@ -58,7 +58,8 @@ export default function RecommendationPage() {
     preferences.location ||
     preferences.propertyType ||
     preferences.furnished ||
-    preferences.security
+    preferences.security ||
+    preferences.maxDistance !== defaultPreferences.maxDistance
   );
 
   useEffect(() => {
@@ -78,25 +79,28 @@ export default function RecommendationPage() {
       try {
         // FIX 2: Format keys into snake_case for Python / Flask compatibility
         const payload = {
-          budget: preferences.budget,
-          price_category: preferences.priceCategory,
-          county: preferences.county,
-          bedrooms: preferences.bedrooms,
-          bathrooms: preferences.bathrooms,
-          location: preferences.location,
-          property_type: preferences.propertyType,
-          furnished: preferences.furnished,
-          security: preferences.security,
-          max_distance: preferences.maxDistance,
+          ...(preferences.budget ? { budget: Number(preferences.budget) } : {}),
+          ...(preferences.priceCategory ? { price_category: preferences.priceCategory } : {}),
+          ...(preferences.county ? { county: preferences.county } : {}),
+          ...(preferences.bedrooms ? { bedrooms: preferences.bedrooms } : {}),
+          ...(preferences.bathrooms ? { bathrooms: preferences.bathrooms } : {}),
+          ...(preferences.location ? { location: preferences.location } : {}),
+          ...(preferences.propertyType ? { property_type: preferences.propertyType } : {}),
+          ...(preferences.furnished ? { furnished: preferences.furnished } : {}),
+          ...(preferences.security ? { security: preferences.security } : {}),
+          max_distance: Number(preferences.maxDistance || 25),
           // Pass both naming conventions to guarantee Flask receives the persona
           priority_profile: preferences.priorityProfile,
           priorityProfile: preferences.priorityProfile,
         };
 
-        const rawData = await getRecommendationsFromAPI(payload);
+        const response = await getRecommendationsFromAPI(payload);
+        const rawData = Array.isArray(response)
+          ? response
+          : response?.recommendations ?? [];
 
         if (isSubscribed) {
-          const normalized = (rawData || []).map(normalizeProperty);
+          const normalized = rawData.map(normalizeProperty);
 
           // FILTER: Keep ONLY properties with a 50% or higher match score
           const qualifiedMatches = normalized.filter(

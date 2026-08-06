@@ -28,6 +28,12 @@ function parseImageUrl(rawImage, propertyId) {
     return `/${cleanPath}`;
   }
 
+  // 3b. Handle legacy repo image paths like "images/... - P001.png" by using the property ID
+  const matchIdInName = imgPath.match(/P\d{3}/i);
+  if (imgPath.includes("images/") && matchIdInName) {
+    return `/property-images/${matchIdInName[0].toUpperCase()}.png`;
+  }
+
   // 4. Handle plain filenames e.g. "P001.png" or "P001"
   if (imgPath.match(/^P\d{3}\.(png|jpg|jpeg|webp)$/i)) {
     return `/property-images/${imgPath}`;
@@ -56,14 +62,14 @@ export function normalizeProperty(raw) {
   const matchScore = scoreRaw !== undefined && scoreRaw !== null ? Math.round(Number(scoreRaw)) : null;
 
   const rawImageSource = raw.image || raw.Image_URL || raw.image_url || raw.images || raw.photos;
-  const propertyId = raw.id || raw.Property_ID || "";
+  const propertyId = raw.id || raw.Property_ID || raw.property_id || raw.propertyId || "";
   
   const resolvedImage = parseImageUrl(rawImageSource, propertyId);
 
   return {
     id: propertyId || Math.random().toString(),
     name: raw.name || raw.title || raw.Property_Name || "Unnamed Property",
-    price: Number(raw.price ?? raw.Price_KES ?? 0),
+    price: Number(raw.price ?? raw.Price_KES ?? raw.price_kes ?? 0),
     estate: raw.estate || raw.Estate || raw.Location || "",
     county: raw.county || raw.County || "Nairobi",
     location: raw.location || (raw.estate ? `${raw.estate}, ${raw.county || "Nairobi"}` : raw.county || "Nairobi"),
