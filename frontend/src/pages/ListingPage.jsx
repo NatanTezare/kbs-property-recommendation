@@ -10,7 +10,7 @@ export default function ListingPage() {
   const [properties, setProperties] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  const API_BASE_URL = "http://localhost:5000/api";
+  const API_BASE_URL = "https://kbs-flask.onrender.com/api";
 
   // 🔹 Filter Controls State
   const [listingType, setListingType] = useState('ALL'); // 'ALL' | 'Rent' | 'Sale'
