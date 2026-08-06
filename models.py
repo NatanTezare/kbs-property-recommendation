@@ -13,13 +13,6 @@ engine, we normalize defensively at load time and log what we fixed.
 import json
 from dataclasses import dataclass, field
 from typing import Optional
-from urllib.parse import quote
-
-# Your teammate's repo hosts property photos at the repo root, named
-# "{Property Name} - {Property ID}.png" (verified against properties.json).
-# Raw GitHub URLs work directly as <img src="..."> with no auth needed for
-# a public repo.
-GITHUB_IMAGE_BASE = "https://raw.githubusercontent.com/NatanTezare/kbs-property-recommendation/main"
 
 
 BEDROOM_MAP = {"0": 0, "1": 1, "2": 2, "3": 3, "4": 4, "5": 5, "6+": 6}
@@ -36,8 +29,9 @@ IMAGE_FILENAME_OVERRIDES = {
 
 
 def _build_image_url(name: str, property_id: str) -> str:
-    filename = IMAGE_FILENAME_OVERRIDES.get(property_id, f"{name} - {property_id}.png")
-    return f"{GITHUB_IMAGE_BASE}/{quote(filename)}"
+    if not property_id:
+        return "/property-images/default.png"
+    return f"/property-images/{property_id.upper()}.png"
 
 
 @dataclass

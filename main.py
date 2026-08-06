@@ -23,9 +23,12 @@ def format_property_for_frontend(prop):
     Standardizes key names to guarantee compatibility with React modal components.
     Ensures missing values never yield 'undefined' on the UI.
     """
+    property_id = prop.get("id") or prop.get("Property_ID") or ""
+    fallback_image = f"/property-images/{property_id}.png" if property_id else "/property-images/default.png"
+
     return {
         # Core Identifiers
-        "id": prop.get("id") or prop.get("Property_ID", ""),
+        "id": property_id,
         "title": prop.get("name") or prop.get("Property_Name", "Unnamed Property"),
         "name": prop.get("name") or prop.get("Property_Name", "Unnamed Property"),
         
@@ -37,8 +40,8 @@ def format_property_for_frontend(prop):
         "size_sqm": prop.get("size_sqm") if prop.get("size_sqm") is not None else prop.get("Size_SQM"),
 
         # Image Path (points to local frontend public folder)
-        "image": prop.get("image") or prop.get("Image_Path") or "/property-images/default.png",
-        "Image_Path": prop.get("image") or prop.get("Image_Path") or "/property-images/default.png",
+        "image": prop.get("image") or prop.get("Image_Path") or fallback_image,
+        "Image_Path": prop.get("image") or prop.get("Image_Path") or fallback_image,
 
         # Location details
         "estate": prop.get("estate") or prop.get("Estate", ""),
@@ -89,7 +92,7 @@ def get_recommendations():
         "user_budget": float(user_inputs.get("budget", user_inputs.get("user_budget", 80000))),
         "target_bedrooms": str(user_inputs.get("bedrooms", user_inputs.get("target_bedrooms", "2"))),
         "target_estate": str(user_inputs.get("estate", user_inputs.get("target_estate", "Kilimani"))),
-        "max_distance_cbd": float(user_inputs.get("max_distance", user_inputs.get("max_distance_cbd", 10.0))),
+        "max_distance_cbd": float(user_inputs.get("max_distance_cbd", user_inputs.get("max_distance", 10.0))),
         "priority_profile": str(user_inputs.get("priority_profile", "1")),
         "require_pets": bool(user_inputs.get("require_pets", False)),
         "require_gated": bool(user_inputs.get("require_gated", True)),
@@ -115,4 +118,4 @@ def get_recommendations():
 
 if __name__ == "__main__":
     print("🚀 Flask Knowledge Engine running on http://127.0.0.1:5000")
-    app.run(debug=True, port=5000)
+    app.run(host="0.0.0.0", port=5000)

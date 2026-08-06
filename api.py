@@ -88,6 +88,12 @@ class ChatResponse(BaseModel):
     results: list[RecommendationItem]
 
 
+def _local_property_image(property_id: str | None) -> str:
+    if not property_id:
+        return "/property-images/default.png"
+    return f"/property-images/{property_id.upper()}.png"
+
+
 def _match_result_to_item(m) -> RecommendationItem:
     return RecommendationItem(
         property_id=m.property.id,
@@ -107,7 +113,7 @@ def _match_result_to_item(m) -> RecommendationItem:
             for k, v in m.breakdown.items()
         ],
         google_maps_link=m.property.raw.get("Google_Maps_Link"),
-        image_url=m.property.image_url,
+        image_url=_local_property_image(m.property.id),
     )
 
 

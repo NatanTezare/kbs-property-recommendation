@@ -1,6 +1,13 @@
 import pandas as pd
 import json
 
+
+def _local_image_path(property_id: str) -> str:
+    if not property_id:
+        return "/property-images/default.png"
+    return f"/property-images/{property_id.upper()}.png"
+
+
 def convert_data():
     csv_file = "KnowledgeBase_Geocoded_115.csv"
     json_file = "properties.json"
@@ -11,8 +18,8 @@ def convert_data():
     # 1. Handle missing values
     df["Internet"] = df["Internet"].fillna("Fibre")
 
-    # 2. Dynamic Image Path with leading slash
-    df["Image_Path"] = "/property-images/" + df["Property_Name"].astype(str) + " - " + df["Property_ID"].astype(str) + ".png"
+    # 2. Local static image path mapping by Property ID
+    df["Image_Path"] = df["Property_ID"].astype(str).apply(_local_image_path)
 
     # Save CSV update
     df.to_csv(csv_file, index=False)
